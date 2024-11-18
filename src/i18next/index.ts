@@ -96,8 +96,8 @@ i18n.use(initReactI18next).init({
       },
     },
   },
-  lng: "ka",
-  fallbackLng: "en",
+  lng: "en",
+  fallbackLng: "ka",
 
   interpolation: {
     escapeValue: false,

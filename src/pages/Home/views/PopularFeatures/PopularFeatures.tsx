@@ -8,7 +8,7 @@ const PopularFeatures: FC = () => {
   return (
     <div>
       <div className="">
-        <div className="rounded-xl border-[1px] border-[#b4a9a952] bg-[#FCFCFC] p-[20px] shadow-md">
+        <div className="rounded-xl border-[1px] border-[#b4a9a952] p-[20px] shadow-md">
           <h3 className="font-[500]">{t("title-popular-tags")}</h3>
           <PopularTags />
         </div>
