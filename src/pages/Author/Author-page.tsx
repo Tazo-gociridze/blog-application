@@ -6,7 +6,6 @@ import { FiGithub } from "react-icons/fi";
 import { GoPeople } from "react-icons/go";
 import Blog from "../Home/views/Blog/Blog";
 import { useTranslation } from "react-i18next";
-import Tag from "@/utils/Tag/Tag";
 
 const AuthorPage: FC = () => {
   const { t } = useTranslation();
