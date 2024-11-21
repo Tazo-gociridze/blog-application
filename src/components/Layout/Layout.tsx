@@ -1,5 +1,5 @@
 import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+// import Footer from "../Footer/Footer";
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const Layout: FC = () => {
     <main>
       <Outlet />
     </main>
-    <Footer />
+    {/* <Footer /> */}
   </div>
   )
 };

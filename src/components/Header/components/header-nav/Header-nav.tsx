@@ -8,7 +8,7 @@ const HeaderNav: FC = () => {
     <div className="header-nav flex gap-[20px] font-[400]">
       <Link to={'/'}>{t("nav-home")}</Link>
       <Link to={'/'}>{t("nav-write")}</Link>
-      <Link to={'/'}>{t("nav-about")}</Link>
+      <Link to={'/about'}>{t("nav-about")}</Link>
     </div>
   );
 };

@@ -7,6 +7,8 @@ import SignUp from "./pages/SignUp/SignUp";
 import { ThemeProvider } from "./components/theme-provider";
 import '@/i18next'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import About from "./pages/About/About";
+import AuthorPage from "./pages/Author/Author-page";
 
 const queryClient = new QueryClient();
 function App() {
@@ -18,6 +20,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />}></Route>
+              <Route path="/about" element={<About />}></Route>
+              <Route path="/author" element={<AuthorPage />}></Route>
               <Route path="/signin" element={<SignIn />}></Route>
               <Route path="/signup" index element={<SignUp />}></Route>
             </Route>
