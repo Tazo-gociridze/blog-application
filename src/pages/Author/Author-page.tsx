@@ -6,6 +6,8 @@ import { FiGithub } from "react-icons/fi";
 import { GoPeople } from "react-icons/go";
 import Blog from "../Home/views/Blog/Blog";
 import { useTranslation } from "react-i18next";
+import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import { AvatarFallback } from "@/components/ui/avatar";
 
 const AuthorPage: FC = () => {
   const { t } = useTranslation();
@@ -52,7 +54,10 @@ const AuthorPage: FC = () => {
   return (
     <section className="m-auto mt-[40px] w-[900px]">
       <div className="flex gap-x-[20px] rounded-lg border-[1px] border-[#918c8c2f] p-[30px] shadow-lg">
-        <div className="h-[120px] w-[120px] rounded-[50%] bg-[#8f8888]"></div>
+        <Avatar className="w-[100px] h-[100px] rounded-[50%]">
+          <AvatarImage className="rounded-[50%]" src="https://github.com/shadcn.png" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
         <div>
           <h1 className="text-[30px] font-[700]">Jane Doe</h1>
           <p>
@@ -107,7 +112,7 @@ const AuthorPage: FC = () => {
           ))}
         </div>
       ) : (
-        <div className="p-[30px] rounded-xl border-[1px] border-[#86828244] shadow-md mt-[40px]">
+        <div className="mt-[40px] rounded-xl border-[1px] border-[#86828244] p-[30px] shadow-md">
           <h2 className="text-[18px] font-[500]">About Jane Doe</h2>
           <p className="mt-[10px]">
             Jane Doe is a seasoned software engineer with over a decade of

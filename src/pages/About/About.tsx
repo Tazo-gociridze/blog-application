@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { defaultStyles } from "@/data/defaultStyles/DefaultStyles";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { FC } from "react";
 import { FaBookOpen } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -24,7 +25,10 @@ const About: FC = () => {
             technology.
           </p>
         </div>
-        <div className="h-[450px] rounded-lg bg-[#b6afaf]"></div>
+        <Avatar className="">
+          <AvatarImage className="" src="https://github.com/shadcn.png" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
       </div>
 
       <div className="mt-[40px]">
