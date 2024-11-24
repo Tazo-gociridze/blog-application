@@ -1,5 +1,3 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,40 +10,17 @@ import {
 import { Input } from "../../components/ui/input";
 import { Link } from "react-router-dom";
 import { defaultStyles } from "@/data/defaultStyles/DefaultStyles";
-import { formSchema, onSubmit } from "./data/formSchema";
-import { useMutation } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
-import { useState } from "react";
-import { login } from "@/supabase/auth";
+import useSignIn from "@/customHooks/sign-in/useSignIn";
+
 
 export default function SignIn() {
-  const { t } = useTranslation();
-  const [loginPayload, setLoginPayload] = useState({
-    email: "",
-    password: "",
-  });
-
-  const { mutate } = useMutation({
-    mutationKey: ["login"],
-    mutationFn: login,
-  });
-
-  const handleSubmitLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!!loginPayload.email && !!loginPayload.password) {
-      mutate(loginPayload);
-    }
-    form.handleSubmit(onSubmit);
-};
-
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-    },
-  });
+  const {
+    t,
+    loginPayload,
+    setLoginPayload,
+    handleSubmitLogin,
+    form,
+  } = useSignIn()
 
   return (
     <section className="flex h-[100vh] items-center justify-center">

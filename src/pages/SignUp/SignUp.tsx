@@ -1,5 +1,3 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,41 +11,16 @@ import {
 import { Input } from "../../components/ui/input";
 import { Link } from "react-router-dom";
 import { defaultStyles } from "@/data/defaultStyles/DefaultStyles";
-import { formSchema, onSubmit } from "./data/formSchema";
-import { useTranslation } from "react-i18next";
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { register } from "@/supabase/auth";
+import useSignUpForm from "@/customHooks/sign-up/useSignUpForm";
 
-export default function ProfileForm() {
-  const { t } = useTranslation();
-  const [registerPayload, setRegisterPayload] = useState({
-    email: "",
-    password: "",
-  });
-
-  const { mutate } = useMutation({
-    mutationKey: ["register"],
-    mutationFn: register,
-  });
-
-  const handleSubmitRegister = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!!registerPayload.email && !!registerPayload.password) {
-      mutate(registerPayload);
-      form.handleSubmit(onSubmit);
-    }
-  };
-
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-      repeatPassword: "",
-    },
-  });
+export default function SignUpForm() {
+  const {
+    t,
+    registerPayload,
+    setRegisterPayload,
+    handleSubmitRegister,
+    form,
+  } = useSignUpForm();
 
   return (
     <section className="flex h-[100vh] items-center justify-center">

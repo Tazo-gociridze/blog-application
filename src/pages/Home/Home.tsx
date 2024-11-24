@@ -2,48 +2,11 @@ import { FC } from "react";
 import FixedWidthWrapper from "../../utils/Fixed-width-wrapper/FixedWidthWrapper";
 import Blog from "./views/Blog/Blog";
 import PopularFeatures from "./views/PopularFeatures/PopularFeatures";
-import { useTranslation } from "react-i18next";
+import useBlogData from "../../customHooks/blog-data/useBlogData";
 
 const Home: FC = () => {
-  const { t } = useTranslation();
 
-  const BlogData = [
-    {
-      id: Math.random(),
-      title: `${t("blog-title")}`,
-      blogCreator: "John Doe",
-      createDate: "May 15, 2023",
-      readTime: "5",
-      description: `${t("blog-description")}`,
-    },
-
-    {
-      id: Math.random(),
-      title: `${t("blog-title")} 2`,
-      blogCreator: "John Doe",
-      createDate: "May 15, 2023",
-      readTime: "5",
-      description: `${t("blog-description")}`,
-    },
-
-    {
-      id: Math.random(),
-      title: `${t("blog-title")} 3`,
-      blogCreator: "John Doe",
-      createDate: "May 15, 2023",
-      readTime: "5",
-      description: `${t("blog-description")}`,
-    },
-
-    {
-      id: Math.random(),
-      title: `${t("blog-title")} 4`,
-      blogCreator: "John Doe",
-      createDate: "May 15, 2023",
-      readTime: "5",
-      description: `${t("blog-description")}`,
-    },
-  ];
+  const {BlogData} = useBlogData()
 
   return (
     <section className="mt-[30px]">

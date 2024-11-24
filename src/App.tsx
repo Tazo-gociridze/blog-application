@@ -9,9 +9,33 @@ import '@/i18next'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import About from "./pages/About/About";
 import AuthorPage from "./pages/Author/Author-page";
+import LoginError from "./pages/login-error/LoginError";
+import { useEffect } from "react";
+import { supabase } from "./supabase";
+import { useAuthContext } from "./contextApi/auth/hook/useAuthContext";
+import AuthGuard, { AuthGuardWhileSignOut } from "./components/route-guard/auth";
+import Profile from "./pages/Profile/Profile";
 
 const queryClient = new QueryClient();
 function App() {
+
+  const { handleStoreUser } = useAuthContext()
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      handleStoreUser(session)
+    })
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      handleStoreUser(session)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+
   return (
     <main>
       <BrowserRouter>
@@ -22,8 +46,10 @@ function App() {
               <Route index element={<Home />}></Route>
               <Route path="/about" element={<About />}></Route>
               <Route path="/author" element={<AuthorPage />}></Route>
-              <Route path="/signin" element={<SignIn />}></Route>
-              <Route path="/signup" index element={<SignUp />}></Route>
+              <Route path="/profile" element={<AuthGuardWhileSignOut><Profile /></AuthGuardWhileSignOut>}></Route>
+              <Route path="/signin" element={<AuthGuard><SignIn /></AuthGuard>}></Route>
+              <Route path="/loginerror" element={<LoginError />}></Route>
+              <Route path="/signup" index element={<AuthGuard><SignUp /></AuthGuard>}></Route>
             </Route>
           </Routes>
         </ThemeProvider>

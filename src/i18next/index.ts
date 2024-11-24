@@ -11,6 +11,7 @@ i18n.use(initReactI18next).init({
         "nav-write": "წერა",
         "nav-about": "ჩვენს შესახებ",
         "sign-in-btn": "შესვლა",
+        "log-out-btn": "გასვლა",
 
         //პოპულარული თეგები
         "title-popular-tags": "პოპულარული თეგები",
@@ -56,7 +57,8 @@ i18n.use(initReactI18next).init({
         "nav-home": "home",
         "nav-write": "write",
         "nav-about": "about",
-        "sign-in-btn": "Sign In",
+        "sign-in-btn": "Sign in",
+        "log-out-btn": "Log out",
 
         //Popular tags
         "title-popular-tags": "Popular tags",
