@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 export default function SignUpForm() {
   const {t} = useTranslation()
   const methods = useForm();
-  const { register, handleSubmit, formState: { errors }, reset, watch } = methods;
+  const { register, handleSubmit, formState: { errors }, reset } = methods;
   const [error, setError] = useState<string | null>(null);
 
   const { mutateAsync: handleSignUp } = useMutation({
