@@ -48,6 +48,19 @@ i18n.use(initReactI18next).init({
         "form-forgot-password": "პაროლი დაგავიწყდათ?",
         "form-sign-up": "დარეგისტრირება",
         "form-dont-have-an-account": "არ გაქვთ აქაუნთი?",
+
+        //ფორმის ვალიდაციები
+         "email-required": "ემაილი აუცილებელია",
+         "email-pattern-message": "ემაილის არასწორი ფირმატი",
+         "email-min-length-message": "ემაილი უნდა შეიცავდეს მინიმუმ 5 სიმბოლოს",
+         "email-max-length-message": "ემაილი ვერ იქნება 100 სიმბოლოზე მეტი",
+
+         "password-required": "პაროლი აუცილებელია",
+         "password-pattern-message": "პაროლის არასწორი ფირმატი",
+         "password-min-length-message": "პაროლი უნდა შეიცავდეს მინიმუმ 8 სიმბოლოს",
+         "password-max-length-message": "პაროლი ვერ იქნება 25 სიმბოლოზე მეტი",
+
+         "name-required": "ემაილი აუცილებელია", 
       },
     },
     en: {
@@ -95,6 +108,19 @@ i18n.use(initReactI18next).init({
         "form-forgot-password": "Forgot password?",
         "form-sign-up": "Sign up",
         "form-dont-have-an-account": "Don't have an account?",
+
+        //forms validation
+        "email-required": "Email is crucial",
+        "email-pattern-message": "Invalid email format",
+        "email-min-length-message": "Email must contain at least 5 characters",
+        "email-max-length-message": "Email cannot exceed 100 characters",
+
+        "password-required": "Password is crucial",
+        "password-pattern-message": "Invalid password format",
+        "password-min-length-message": "password must contain at least 8 characters",
+        "password-max-length-message": "password cannot exceed 25 characters",
+
+        "name-required": "Name is required", 
       },
     },
   },

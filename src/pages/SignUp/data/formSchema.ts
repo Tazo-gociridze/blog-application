@@ -28,4 +28,4 @@ export const formSchema = z.object({
 
  export const onSubmit = (data: any) => {
     console.log(data);
-  };
+};

@@ -1,94 +1,98 @@
-import  { btnStyles, inputStyles } from "@/customHooks/profile/useProfileLogic";
+import { btnStyles, inputStyles } from "@/customHooks/profile/useProfileLogic";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+interface ProfileFormValues {
+  full_name_en: string;
+  full_name_ka: string;
+  phone_number: string;
+  avatar_url: string;
+}
 
 const ProfileForm = (props: any) => {
-    const {
-        setProfileData,
-        handleSubmit,
-        full_name_en,
-        full_name_ka,
-        phone_number,
-        avatar_url,
-      } = props;
+  const { setProfileData, profileData, handleSubmitProfile } = props;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ProfileFormValues>({
+    defaultValues: profileData,
+  });
+
+  const onSubmit: SubmitHandler<ProfileFormValues> = (data) => {
+    setProfileData(data);
+    handleSubmitProfile();
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label htmlFor="name" className="mb-2 block font-medium text-gray-700">
+        <label
+          htmlFor="full_name_en"
+          className="mb-2 block font-medium text-gray-700"
+        >
           Name:
         </label>
         <input
-          type="text"
-          id="name"
-          value={full_name_en}
-          onChange={(e) =>
-            setProfileData((prev: any) => ({
-              ...prev,
-              full_name_en: e.target.value,
-            }))
-          }
+          id="full_name_en"
+          {...register("full_name_en", { required: "Name is required" })}
           className={inputStyles}
-          required
         />
+        {errors.full_name_en && (
+          <p className="text-sm text-red-500">{errors.full_name_en.message}</p>
+        )}
       </div>
       <div>
         <label
-          htmlFor="nameGeo"
+          htmlFor="full_name_ka"
           className="mb-2 block font-medium text-gray-700"
         >
           Name (Georgian):
         </label>
         <input
-          type="text"
-          id="nameGeo"
-          value={full_name_ka}
-          onChange={(e) =>
-            setProfileData((prev: any) => ({
-              ...prev,
-              full_name_ka: e.target.value,
-            }))
-          }
+          id="full_name_ka"
+          {...register("full_name_ka")}
           className={inputStyles}
         />
       </div>
       <div>
         <label
-          htmlFor="phoneNumber"
+          htmlFor="phone_number"
           className="mb-2 block font-medium text-gray-700"
         >
           Phone Number:
         </label>
         <input
+          id="phone_number"
           type="tel"
-          id="phoneNumber"
-          value={phone_number}
-          onChange={(e) =>
-            setProfileData((prev: any) => ({
-              ...prev,
-              phone_number: e.target.value,
-            }))
-          }
+          {...register("phone_number", {
+            pattern: {
+              value: /^\+?\d{10,15}$/,
+              message: "Invalid phone number format",
+            },
+          })}
           className={inputStyles}
         />
+        {errors.phone_number && (
+          <p className="text-sm text-red-500">{errors.phone_number.message}</p>
+        )}
       </div>
       <div>
         <label
-          htmlFor="avatarUrl"
+          htmlFor="avatar_url"
           className="mb-2 block font-medium text-gray-700"
         >
           Avatar URL:
         </label>
         <input
+          id="avatar_url"
           type="url"
-          id="avatarUrl"
-          value={avatar_url}
-          onChange={(e) =>
-            setProfileData((prev: any) => ({
-              ...prev,
-              avatar_url: e.target.value,
-            }))
-          }
+          {...register("avatar_url", {})}
           className={inputStyles}
         />
+        {errors.avatar_url && (
+          <p className="text-sm text-red-500">{errors.avatar_url.message}</p>
+        )}
       </div>
       <button
         type="submit"

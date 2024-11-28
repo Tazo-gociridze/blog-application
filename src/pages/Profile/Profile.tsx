@@ -7,12 +7,9 @@ const Profile: React.FC = () => {
   const {
     setProfileData,
     updatedProfileData,
-    handleSubmit,
+    handleSubmitProfile,
     handleLogout,
-    full_name_en,
-    full_name_ka,
-    phone_number,
-    avatar_url,
+    profileData,
   } = useProfileLogic();
   
   return (
@@ -23,11 +20,8 @@ const Profile: React.FC = () => {
       </h2>
       <ProfileForm
         setProfileData={setProfileData}
-        handleSubmit={handleSubmit}
-        full_name_en={full_name_en}
-        full_name_ka={full_name_ka}
-        phone_number={phone_number}
-        avatar_url={avatar_url}
+        handleSubmitProfile={handleSubmitProfile}
+        profileData={profileData}
       />
       <LogoutBtn handleLogout={handleLogout}/>
     </div>

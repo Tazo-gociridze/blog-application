@@ -53,17 +53,24 @@ export const useProfileLogic = () => {
     },
   });
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    handleFillProfileData({ ...profileData, id: user.user.id });
-    handleGetProfileData(user.user.id);
+const handleSubmitProfile = async () => {
+  try {
+    console.log("Submitting profile data:", profileData);
+    await handleFillProfileData({ ...profileData, id: user.user.id });
+    console.log("Profile data submitted successfully");
+    await handleGetProfileData(user.user.id);
+    console.log("Profile data fetched successfully");
     reset()
-  };
+  } catch (error) {
+    console.error("Error submitting profile data:", error);
+  }
+};
 
   return {
     setProfileData,
+    profileData,
     updatedProfileData,
-    handleSubmit,
+    handleSubmitProfile,
     handleLogout,
     full_name_en,
     full_name_ka,

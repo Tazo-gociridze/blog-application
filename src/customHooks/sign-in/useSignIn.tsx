@@ -38,7 +38,6 @@ const { t } = useTranslation();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
       email: "",
       password: "",
     },

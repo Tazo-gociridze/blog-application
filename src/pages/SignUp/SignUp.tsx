@@ -1,134 +1,151 @@
+import { useForm, FormProvider } from 'react-hook-form';
 import { Button } from "@/components/ui/button";
 import {
-  Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "../../components/ui/input";
-import { Link } from "react-router-dom";
 import { defaultStyles } from "@/data/defaultStyles/DefaultStyles";
-import useSignUpForm from "@/customHooks/sign-up/useSignUpForm";
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { signup } from '@/supabase/auth';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 
 export default function SignUpForm() {
-  const {
-    t,
-    registerPayload,
-    setRegisterPayload,
-    handleSubmitRegister,
-    form,
-  } = useSignUpForm();
+  const {t} = useTranslation()
+  const methods = useForm();
+  const { register, handleSubmit, formState: { errors }, reset, watch } = methods;
+  const [error, setError] = useState<string | null>(null);
+
+  const { mutateAsync: handleSignUp } = useMutation({
+    mutationKey: ['register'],
+    mutationFn: signup,
+  });
+
+  const onSubmit = async (data: any) => {
+    setError(null);
+
+    try {
+      if (data.password !== data.repeatPassword) {
+        throw new Error('Passwords do not match');
+      }
+      await handleSignUp(data);
+      reset();
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
 
   return (
     <section className="flex h-[100vh] items-center justify-center">
-      <Form {...form}>
+      <FormProvider {...methods}>
         <form
-          onSubmit={handleSubmitRegister}
+          onSubmit={handleSubmit(onSubmit)}
           className="w-[500px] space-y-8 rounded-xl border-[1px] border-[#5f5a5a1a] p-[40px] shadow-xl"
         >
-          <div className="text-center">
-            <h1 className="text-[25px] font-[700]">{t("sign-up-title")}</h1>
-            <p className="text-[14px] text-[#7c7878]">
-              {t("sign-up-description")}
-            </p>
-          </div>
+          {/* ... form header ... */}
+
           <FormField
-            control={form.control}
             name="username"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Name" type="text" {...field} />
+                  <Input type="text" placeholder="Name" {...field} {...register("username", { required: t("name-required") })} />
                 </FormControl>
-                <FormMessage />
+                {errors.username && <FormMessage>{errors.username.message as string}</FormMessage>}
               </FormItem>
             )}
           />
 
           <FormField
-            control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input
+                <Input
+                    type="email"
                     placeholder="Email"
-                    type="text"
                     {...field}
-                    value={registerPayload.email}
-                    onChange={(e) => {
-                      setRegisterPayload({
-                        email: e.target.value,
-                        password: registerPayload.password,
-                      });
-                    }}
+                    {...register('email', {
+                      required: t("email-required"),
+                      pattern: {
+                        value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+                        message: t("email-pattern-message"),
+                      },
+                      minLength: { value: 15, message: t("email-min-length-message") },
+                      maxLength: { value: 100, message: t("email-max-length-message") },
+                    })}
                   />
                 </FormControl>
-                <FormMessage />
+                {errors.email && <FormMessage>{errors.email.message as string}</FormMessage>}
               </FormItem>
             )}
           />
 
           <FormField
-            control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Password"
+                <Input
                     type="password"
+                    placeholder="Password"
                     {...field}
-                    value={registerPayload.password}
-                    onChange={(e) => {
-                      setRegisterPayload({
-                        email: registerPayload.email,
-                        password: e.target.value,
-                      });
-                    }}
+                    {...register('password', {
+                      required: t("password-required"),
+                      minLength: { value: 8, message: t("password-min-length-message") },
+                      maxLength: { value: 25, message: t("password-max-length-message") },
+                    })}
                   />
                 </FormControl>
-                <FormMessage />
+                {errors.password && <FormMessage>{errors.password.message as string}</FormMessage>}
               </FormItem>
             )}
           />
 
           <FormField
-            control={form.control}
             name="repeatPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Repeat password</FormLabel>
+                <FormLabel>Repeat Password</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Repeat password"
+                <Input
                     type="password"
+                    placeholder="Password"
                     {...field}
+                    {...register('password', {
+                      required: t("password-required"),
+                      minLength: { value: 8, message: t("password-min-length-message") },
+                      maxLength: { value: 25, message: t("password-max-length-message") },
+                    })}
                   />
                 </FormControl>
-                <FormMessage />
+                {errors.repeatPassword && <FormMessage>{errors.repeatPassword.message as string}</FormMessage>}
               </FormItem>
             )}
           />
 
-          <FormDescription className="flex justify-between">
-            <span>{t("form-have-an-account")}</span>
+          <div className="flex justify-between">
+            <span>Already have an account?</span>
             <Link className="text-[blue]" to="/signin">
-              {t("form-sign-in")}
+              Sign in
             </Link>
-          </FormDescription>
+          </div>
 
+          {error && <p className="text-red-500">{error}</p>}
           <Button type="submit" className={`w-[100%] ${defaultStyles.button}`}>
-            {t("form-submit-btn")}
+            Sign Up
           </Button>
         </form>
-      </Form>
+      </FormProvider>
     </section>
   );
 }
